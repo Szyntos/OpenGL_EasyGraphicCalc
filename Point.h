@@ -5,6 +5,7 @@
 #include "Color.h"
 
 class Point {
+//    Reprezentacja punktu
 public:
     float x, y, z;
     float size;
@@ -38,7 +39,6 @@ public:
         z = nz;
         size = 0.04;
         clr = nclr;
-
     }
 
     void draw();

@@ -3,6 +3,7 @@
 
 
 class Color {
+//    Reprezentacja Koloru
 public:
     float r, g, b;
 

@@ -9,41 +9,47 @@
 #include <iostream>
 
 class Axis {
+//    Reprezentacja osi
 public:
+//    Długość osi
     float limit;
-    float size, cornerOffset;
+//    Wielkość prostopadłościanów reprezentujacych osie
+    float size;
     Cube corner, xAxis, yAxis, zAxis;
+
+//    Przesunięcie osi
     double xOff = 0;
     double yOff = 0;
     double zOff = 0;
+
+//    Rozdzielczość siatki
     int n = 10;
+
     Axis(){
         limit = 1;
         size = 1;
-        cornerOffset = 0.01;
         setOffset(0, 0, 0);
-        constructor();
+        constructCubes();
     }
     Axis(float lim, float nsize, float noffset){
         size = nsize;
         limit = lim;
-        cornerOffset = noffset;
         setOffset(0, 0, 0);
-        constructor();
+        constructCubes();
     }
     void setOffset(double x, double y, double z){
-
+//        Ustawia przesunięcie osi
         xOff = x;
         yOff = y;
         zOff = z;
-//        constructor();
     }
 
-    void constructor(){
+    void constructCubes(){
         Point cornerPoint(- size, - size, 0);
         Point xPoint(- size, - size, limit);
         Point yPoint(0, - size, 0);
         Point zPoint(- size, 0, 0);
+
         corner = Cube(cornerPoint, size, size, size, Color(0, 0, 0));
         xAxis = Cube(yPoint, limit, size, size,Color(1, 0, 0));
         yAxis = Cube(zPoint, size, limit, size, Color(0, 1, 0));

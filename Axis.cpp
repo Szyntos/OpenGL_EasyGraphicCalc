@@ -11,12 +11,14 @@
 
 
 void Axis::draw() {
+//    Rysuje osie jako cienkie prostopadłościany
     Cube nAxis;
     corner.draw();
     xAxis.draw();
-
     yAxis.draw();
     zAxis.draw();
+
+//    Rysowanie siatki
     float scale = 3;
     for (int i = 0; i < n; ++i) {
         nAxis = Cube(Point(xAxis.origin.x, xAxis.origin.y + (i+1) * limit/n, xAxis.origin.z), limit, xAxis.height/scale, xAxis.depth/scale);
@@ -35,6 +37,8 @@ void Axis::draw() {
 }
 
 void Axis::drawText() {
+
+//    Rysowanie opisu osi na ekranie
     std::ostringstream streamObj;
     streamObj << std::setprecision(3);
 
@@ -43,7 +47,7 @@ void Axis::drawText() {
     unsigned char s[20];
     glRasterPos3f(0, 0, 0);
     glColor3f(0, 0, 0);
-    strcpy( (char*) s, streamObj.str().c_str() );
+    memcpy( (char*) s, streamObj.str().c_str(), strlen(streamObj.str().c_str())+1);
     glutBitmapString(GLUT_BITMAP_HELVETICA_10, ( s));
     streamObj.str("");
     streamObj.clear();
@@ -52,7 +56,7 @@ void Axis::drawText() {
     streamObj <<"(" << origin.x << ", " << origin.y << ", " << origin.z << ")";
     glRasterPos3f(limit, 0, 0);
     glColor3f(0, 0, 0);
-    strcpy( (char*) s, streamObj.str().c_str() );
+    memcpy( (char*) s, streamObj.str().c_str(), strlen(streamObj.str().c_str())+1);
     glutBitmapString(GLUT_BITMAP_HELVETICA_10, ( s));
     streamObj.str("");
     streamObj.clear();
@@ -61,7 +65,7 @@ void Axis::drawText() {
     streamObj <<"(" << origin.x << ", " << origin.y << ", " << origin.z << ")";
     glRasterPos3f(0, limit, 0);
     glColor3f(0, 0, 0);
-    strcpy( (char*) s, streamObj.str().c_str() );
+    memcpy( (char*) s, streamObj.str().c_str(), strlen(streamObj.str().c_str())+1);
     glutBitmapString(GLUT_BITMAP_HELVETICA_10, ( s));
     origin = Point(xOff, yOff, zOff-limit);
     streamObj.str("");
@@ -70,7 +74,7 @@ void Axis::drawText() {
     streamObj <<"(" << origin.x << ", " << origin.y << ", " << origin.z << ")";
     glRasterPos3f(0, 0, limit);
     glColor3f(0, 0, 0);
-    strcpy( (char*) s, streamObj.str().c_str() );
+    memcpy( (char*) s, streamObj.str().c_str(), strlen(streamObj.str().c_str())+1);
     glutBitmapString(GLUT_BITMAP_HELVETICA_10, ( s));
     streamObj.str("");
     streamObj.clear();

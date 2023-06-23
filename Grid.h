@@ -8,11 +8,17 @@
 #include <iostream>
 
 class Grid {
+//    Reprezantacja funkcji na siatce
 public:
+//    Rozdzielczość funkcji
     int n;
+//    Osie, według których funkcja jest rysowana
     Axis ax;
+//    Lista 2D punktów funkcji
     Point** arr;
+//    Typ wyświetlanej funkcji
     int functionType = 0;
+//    Przesunięcie funkcji
     double xOff = 0;
     double yOff = 0;
     double zOff = 0;
@@ -25,14 +31,15 @@ public:
     Grid(Axis nax, int nn){
         n = nn;
         ax = nax;
-        constructor();
+        constructArr();
     }
     void changeResolution(int nn){
         n = nn;
-        constructor();
+        constructArr();
     }
 
-    void constructor(){
+    void constructArr(){
+//        Wypełnia listę punktami wg funkcji
         arr = new Point*[n+1];
         for (int i = 0; i < n+1; i++) {
             arr[i] = new Point[n+1];
@@ -45,8 +52,6 @@ public:
         int k = 0;
         for (int i = 0; i < n+1; ++i) {
             for (int j = 0; j < n+1; ++j) {
-//                newX = -ax.limit/2 + i * dx;
-//                newY = -ax.limit/2 + j * dy;
                 newX = i * dx;
                 newZ = j * dz;
                 value = f(newX, newZ);
@@ -58,6 +63,7 @@ public:
         }
     }
     float smoothstep(float x, float edge0 = 0.0f, float edge1 = 1.0f) {
+//        funkcja z wikipedii Smoothstep
         // Scale, and clamp x to 0..1 range
         x = clamp((x - edge0) / (edge1 - edge0));
 
@@ -69,6 +75,16 @@ public:
         return x;
     }
 
+
+
+    void setOffset(double x, double  y, double z){
+//        Ustawia przesunięcie funkcji
+        xOff = x;
+        yOff = y;
+        zOff = z;
+        constructArr();
+
+    }
     float sign(float x){
         if(x < 0){
             return -1;
@@ -78,17 +94,8 @@ public:
         return 0;
     }
 
-    void setOffset(double x, double  y, double z){
-        xOff = x;
-        yOff = y;
-        zOff = z;
-
-        constructor();
-
-    }
-
-
     float f(float x, float y){
+//        Funkcje wyświetlane na ekranie
         float newX = x + xOff;
         float newY = y + yOff;
         switch (functionType) {
@@ -105,7 +112,7 @@ public:
             case 4:
                 return sign((newX)) * atan((newX)*80)/6 * sign(-(newY)-(newX)+1) * sign(-(newY)+(newX)+1)*5 - 1.01 + zOff;
             case 5:
-                return sin(10*((newX)*(newX)+(newY)*(newY)))/10 + zOff;
+                return 4 * sin(10*((newX)*(newX)+(newY)*(newY)))/10 + zOff;
             case 6:
                 return ( ((1-sign(-(newX)-.9+abs((newY)*2)))/3*(sign(.9-(newX))+1)/3)*(sign((newX)+.65)+1)/2 -
                 ((1-sign(-(newX)-.39+abs((newY)*2)))/3*(sign(.9-(newX))+1)/3) +
@@ -116,15 +123,16 @@ public:
     }
 
     void changeFunction(){
+//        Cykluje rodzaj funkcji
         functionType++;
         functionType = functionType%7;
-        constructor();
+        constructArr();
     }
 
     void changeFunction(int f){
+//        Zmienia typ funkcji na podany
         functionType = f % 7;
-//        functionType = functionType%6;
-        constructor();
+        constructArr();
     }
 
     void draw();

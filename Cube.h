@@ -1,7 +1,3 @@
-//
-// Created by Szymon on 21.06.2023.
-//
-
 #ifndef UNTITLED_CUBE_H
 #define UNTITLED_CUBE_H
 
@@ -9,8 +5,11 @@
 #include "Point.h"
 
 class Cube {
+//    Reprezentacja prostopadłościanu
 public:
+//    Origin to bliższy lewy dolny punkt
     Point origin;
+//    width - w prawo, height - w górę, depth - do tyłu
     float width, height, depth;
     Color clr;
 
